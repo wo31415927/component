@@ -200,6 +200,7 @@ public abstract class AbstractRunningService implements Service {
    * debugging output.
    *
    * <p>Subclasses may override this method.
+   * If use anonymous class,this method'll return empty str</p>
    *
    * @since 14.0 (present in 10.0 as getServiceName)
    */
