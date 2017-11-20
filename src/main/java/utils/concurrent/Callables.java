@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * 取自guava,修改threadRenaming为public
  * @author cctv 2017/11/13
  */
 public class Callables {
