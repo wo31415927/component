@@ -109,7 +109,7 @@ public class HelloTest {
         }, BackpressureStrategy.BUFFER)
                 //指定Observable使用的线程,只能指定一次
                 .subscribeOn(Schedulers.newThread()).skip(10).take(5)
-                //指定map动作使用的线程,下一个动作生效,当前动作还是使用的主线程
+                //指定map动作使用的线程
                 .observeOn(Schedulers.io()).map(s ->
                 "0x" + s)
                 //可以多次指定,都在main线程中执行,以最后一个指定的Scheduler为准
@@ -117,12 +117,13 @@ public class HelloTest {
                 .observeOn(Schedulers.from(ExtraExecutors.renamingDecorator(Executors.newSingleThreadExecutor(), () -> "Extra"))).
                 //RxJava使用的都是deamon线程，所以main线程不能提前结束
                 //阻塞main线程
-                        blockingSubscribe(new Consumer<String>() {
+                        subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
                         log.info(s);
                     }
                 });
+        Thread.sleep(100000);
     }
 
     /**
