@@ -6,8 +6,6 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 
-import pojo.TableInfo;
-
 /**
  * @author cctv 2017/12/1
  */

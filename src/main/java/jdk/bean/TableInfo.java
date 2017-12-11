@@ -1,4 +1,4 @@
-package pojo;
+package jdk.bean;
 
 import lombok.Data;
 

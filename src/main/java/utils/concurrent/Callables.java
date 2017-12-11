@@ -70,7 +70,7 @@ public class Callables {
 
     /** Tries to set name of the given {@link Thread}, returns true if successful. */
     private static boolean trySetName(final String threadName, Thread currentThread) {
-        // In AppEngine this will always fail, should we test for that explicitly using
+        // In AppEngine this will always fail, should we testscope for that explicitly using
         // MoreExecutors.isAppEngine.  More generally, is there a way to see if we have the modifyThread
         // permission without catching an exception?
         try {
