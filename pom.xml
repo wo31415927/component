@@ -17,6 +17,7 @@
         <lombok.version>1.14.6</lombok.version>
         <log4j2.version>2.3</log4j2.version>
         <slf4j.version>1.7.12</slf4j.version>
+        <jmockit.version>1.37</jmockit.version>
     </properties>
     
     <dependencies>
@@ -75,6 +76,12 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>${jmockit.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
