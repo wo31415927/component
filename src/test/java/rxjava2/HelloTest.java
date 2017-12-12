@@ -1,6 +1,7 @@
 package rxjava2;
 
 import org.junit.Test;
+import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
@@ -18,6 +19,7 @@ import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import utils.concurrent.ExtraExecutors;
@@ -144,7 +146,25 @@ public class HelloTest {
                         //并行做的结果是乱序
                         Flowable.just(v)
                                 .subscribeOn(Schedulers.computation())
-                                .map(w -> w * w)
+                                .map(new Function<Integer, Object>() {
+                                    @Override
+                                    public Object apply(@NonNull Integer integer) throws Exception {
+                                        int i = 1/0;
+                                        return integer * integer;
+                                    }
+                                }).onErrorResumeNext(new Function<Throwable, Publisher<? extends Integer>>() {
+                            @Override
+                            public Publisher<? extends Integer> apply(@NonNull Throwable throwable) throws Exception {
+                                //异常发生时按原有值重新发射
+                                return Flowable.just(v)
+                                        .subscribeOn(Schedulers.computation());
+                            }
+                        }).onErrorReturn(new Function<Throwable, Object>() {
+                            @Override
+                            public Object apply(@NonNull Throwable throwable) throws Exception {
+                                return null;
+                            }
+                        })
                 )
                 .blockingSubscribe(w -> log.info(w.toString()));
         log.info("Parallel: ");
@@ -199,7 +219,6 @@ public class HelloTest {
 
     /**
      * Flowable/Subscriber:这种模型支持背压,需要手动发出请求才能取到数据
-     * @throws Exception
      */
     @Test
     public void testBackPressure2() throws Exception {
@@ -207,6 +226,7 @@ public class HelloTest {
         //异步线程才需要使用blockingSubscribe
         Flowable.range(0, 100).observeOn(Schedulers.newThread()).blockingSubscribe(new Subscriber<Integer>() {
             Subscription subscription;
+
             /**
              *
              * @param subscription 用于request or cancel

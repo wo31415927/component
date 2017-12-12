@@ -2,10 +2,12 @@ package testscope.jmockit;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import mockit.Invocation;
 import mockit.Mock;
 import mockit.MockUp;
+import mockit.integration.junit4.JMockit;
 
 import static org.junit.Assert.assertSame;
 
@@ -14,6 +16,7 @@ import static org.junit.Assert.assertSame;
  *
  * @author zeyu 2017/12/11
  */
+@RunWith(JMockit.class)
 public class StateTest {
     MockUp<StateTest.DumpCmd> cmd = new MockUp<StateTest.DumpCmd>() {
         //$clinit使mock实例忽略原有类中的static属性或逻辑初始化

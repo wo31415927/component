@@ -1,4 +1,4 @@
-package jdk.bean;
+package testscope.jmockit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertSame;
 
 /** @author cctv 2017/12/9 */
 @RunWith(JMockit.class)
-public class JmockitTest {
+public class ExpectationTest {
   @Test
   public void testExpectation(
       @Mocked Dependency1 d1, @Injectable Dependency2 d2, @Mocked Dependency3 d3) {
@@ -108,6 +108,7 @@ public class JmockitTest {
 
   /**
    * 使用@Capturing标注基类/接口，所有实现类会被mock
+   * @Capturing是出现在参数列表中的，如果是作为field声明的，maxInstances会失效，@Capturing退化为@Mock。
    *
    * @param service
    */
