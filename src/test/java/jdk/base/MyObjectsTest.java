@@ -1,5 +1,8 @@
 package jdk.base;
 
+import com.google.common.collect.Lists;
+import com.google.common.truth.Truth;
+
 import org.junit.Test;
 
 import java.util.Objects;
@@ -10,6 +13,9 @@ import java.util.Objects;
 public class MyObjectsTest {
     @Test
     public void testEqual() throws Exception {
-        Objects.deepEquals("123".getBytes(),"123".getBytes());
+        //Objects.deepEquals不会递归地去比较集合中的集合
+        Truth.assertThat(Objects.deepEquals(Lists.newArrayList("123".getBytes(),"123".getBytes()),Lists.newArrayList("123".getBytes(),"123"
+                .getBytes()))).isFalse();
+        Truth.assertThat(Objects.deepEquals("123".getBytes(), "123".getBytes())).isTrue();
     }
 }
