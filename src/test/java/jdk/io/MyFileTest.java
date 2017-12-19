@@ -4,12 +4,17 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 
 /**
@@ -49,11 +54,12 @@ public class MyFileTest {
 
     @Test
     public void testLoadFile() throws Exception {
-    /* String s = new String(CipherUtils.hex2ASCIIByte("0x05".substring(2).getBytes()));
-    String des = s+"Hello"+s+"World"+s;
-    System.out.println(s);
-    System.out.println(Splitter.on(s).splitToList(des));
-    System.out.println(des.startsWith(s) && des.endsWith(s));*/
+        Path path = Paths.get("target/classes/log4j2.xml");
+        //使用决对路径或者从项目根目录获取
+        System.out.println(path.toFile().getAbsolutePath());
+        try(InputStream inputStream = Files.newInputStream(path)){
+            System.out.println(inputStream);
+        }
         //竟然无法使用绝对路径
         try (InputStream inputStream =
                      MyFile.class.getResourceAsStream("D:\\tmp\\mytmp\\apple1\\testcolumn\\testcolumn.txt")) {
@@ -63,6 +69,19 @@ public class MyFileTest {
                      new FileInputStream("D:\\tmp\\mytmp\\apple1\\testcolumn\\testcolumn.txt")) {
             System.out.println(inputStream);
         }
+
+        //同File
+        Files.walkFileTree(
+//                Paths.get("target/classes/"),
+                Paths.get("D:\\tmp\\mytmp\\apple1\\testcolumn"),
+                new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                            throws IOException {
+                        System.out.println(file.toFile().getAbsolutePath());
+                        return super.visitFile(file, attrs);
+                    }
+                });
     }
 
     /**

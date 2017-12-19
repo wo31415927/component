@@ -25,6 +25,15 @@ public class ExpectationTest {
   @Test
   public void testExpectation(
       @Mocked Dependency1 d1, @Injectable Dependency2 d2, @Mocked Dependency3 d3) {
+    /*
+    final ITimer timer = new CntTimer();
+    //此处声明class，表示对Expectations中声明的方法mock，其他的方法调用原来的逻辑
+    new Expectations(CntTimer.class) {
+      {
+        timer.addConsumeCnt(anyInt);
+        result = new SQLException("Mock");
+      }
+    };*/
     //可以在此处指定具体的实例或class来实现部分Mock
     new Expectations() {
       {
