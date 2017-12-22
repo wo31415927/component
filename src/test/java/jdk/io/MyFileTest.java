@@ -57,7 +57,7 @@ public class MyFileTest {
         Path path = Paths.get("target/classes/log4j2.xml");
         //使用决对路径或者从项目根目录获取
         System.out.println(path.toFile().getAbsolutePath());
-        try(InputStream inputStream = Files.newInputStream(path)){
+        try (InputStream inputStream = Files.newInputStream(path)) {
             System.out.println(inputStream);
         }
         //竟然无法使用绝对路径
@@ -69,7 +69,6 @@ public class MyFileTest {
                      new FileInputStream("D:\\tmp\\mytmp\\apple1\\testcolumn\\testcolumn.txt")) {
             System.out.println(inputStream);
         }
-
         //同File
         Files.walkFileTree(
 //                Paths.get("target/classes/"),
@@ -94,5 +93,12 @@ public class MyFileTest {
         arr2[0] = new Object[]{1, 2};
         arr2[1] = new Object[]{3, 4};
         System.out.println(Arrays.equals(arr1, arr2));
+    }
+
+    @Test
+    public void testTmpDir() throws Exception {
+        Path supplyPath = Paths.get(System.getProperty("java.io.tmpdir")).resolve("udaldump1").resolve("supply");
+        //当父目录不存在时，自动创建父目录
+        Files.createDirectories(supplyPath);
     }
 }
