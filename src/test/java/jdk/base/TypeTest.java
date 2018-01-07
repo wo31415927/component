@@ -25,4 +25,11 @@ public class TypeTest {
         //2进制，1100100
         System.out.println(bi1.toString(2));
     }
+
+    @Test
+    public void testString() throws Exception {
+        String s = "\na\r";
+        //2进制，1100100
+        System.out.println("0" + s.trim() + "1");
+    }
 }
