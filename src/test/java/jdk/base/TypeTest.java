@@ -27,7 +27,14 @@ public class TypeTest {
     }
 
     @Test
-    public void testString() throws Exception {
+    public void testTrimString() throws Exception {
+        String s = "\na\r";
+        //2进制，1100100
+        System.out.println("0" + s.trim() + "1");
+    }
+
+    @Test
+    public void testReplaceString() throws Exception {
         String s = "\na\r";
         //2进制，1100100
         System.out.println("0" + s.trim() + "1");
