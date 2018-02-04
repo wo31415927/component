@@ -1,4 +1,4 @@
-package jdk.pattern;
+package jdk.base;
 
 /**
  * @author zeyu 2017/11/28

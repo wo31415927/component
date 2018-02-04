@@ -24,7 +24,7 @@ import static org.junit.Assert.assertSame;
 public class ExpectationTest {
   @Test
   public void testExpectation(
-      @Mocked Dependency1 d1, @Injectable Dependency2 d2, @Mocked Dependency3 d3) {
+          @Mocked final Dependency1 d1, @Injectable final Dependency2 d2, @Mocked Dependency3 d3) {
     /*
     final ITimer timer = new CntTimer();
     //Expectations中声明的方法mock，其他的方法调用原来的逻辑
@@ -89,7 +89,7 @@ public class ExpectationTest {
   }
 
   @Test
-  public void testVerify(@Mocked Dependency1 d1, @Mocked Dependency2 d2) {
+  public void testVerify(@Mocked final Dependency1 d1, @Mocked final Dependency2 d2) {
     d1.mockMethod();
     d1.random();
     d2.mockMethod();
@@ -123,7 +123,7 @@ public class ExpectationTest {
    * @param service
    */
   @Test
-  public void mockingImplementationClassesFromAGivenBaseType(@Capturing Service service) {
+  public void mockingImplementationClassesFromAGivenBaseType(@Capturing final Service service) {
     new Expectations() {
       {
         service.doSomething();
