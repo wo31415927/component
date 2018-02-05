@@ -127,12 +127,6 @@
             <version>3.0.0</version>
         </dependency>-->
         <dependency>
-            <groupId>org.jmockit</groupId>
-            <artifactId>jmockit</artifactId>
-            <version>${jmockit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
@@ -198,13 +192,12 @@
     <build>
         <plugins>
             <!-- 设置源文件编码 -->
-            <!--注释此plugin会导致idea的project和moudel的compile level变为jdk1.5-->
+            <!--注释此plugin会导致idea module的compile level变为jdk1.5-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <compilerVersion>1.8</compilerVersion>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
