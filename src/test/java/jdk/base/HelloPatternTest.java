@@ -17,8 +17,11 @@ public class HelloPatternTest {
 
   @Test
   public void testSpecChar() throws Exception {
-    String str = "";
-    List<String> pList = Lists.newArrayList("\u005c\u005c");
-    System.out.println(str.replaceAll(pList.get(0), ""));
+    String str = "He\\llo\"";
+    //\u005c,一个，idea直接报编译错误
+    //两个，pattern报compile错误
+//    List<String> pList = Lists.newArrayList();
+    List<String> pList = Lists.newArrayList("\u005c\u005c\u005c\u005c","\\u005c","\u005c\u0022","\\u0022");
+    System.out.println(str.replaceAll(pList.get(3), ""));
   }
 }
