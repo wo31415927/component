@@ -1,5 +1,8 @@
 package jdk.container;
 
+import com.google.common.collect.Maps;
+import com.google.gson.internal.LinkedTreeMap;
+
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -22,6 +25,7 @@ public class MyMapTest {
 
     public void print() {
         Iterator iter = map.entrySet().iterator();
+        System.out.println("---");
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             System.out.println(entry.getKey() + "=" + entry.getValue());
@@ -63,6 +67,16 @@ public class MyMapTest {
         print();
         //get之后，链表的顺序发生变化
         map.get("apple");
+        print();
+    }
+
+    @Test
+    public void testLinkedTreeMap() throws Exception {
+        map = Maps.newTreeMap();
+        put();
+        print();
+        map = new LinkedTreeMap<String, String>();
+        put();
         print();
     }
 }
