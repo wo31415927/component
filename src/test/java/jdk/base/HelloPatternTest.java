@@ -41,10 +41,10 @@ public class HelloPatternTest {
     @Test
     public void testEasyPattern() throws Exception {
         //[.]中的.含义为普通字符，变得无需转义了，而[]外的.则需要转义
-        String r1 = filter("[.]+@[0-9]+\\.[a-z]+");
+        String r1 = filter("[._u005b_u005d]+@[0-9]+\\.[a-z]+");
         //非法的顺序，-符号变成了从.(0x2e)字符到$(0x24)字符的含义，而0x2e大于0x24
         //r1="[.-\\u0024]+";
-        Matcher m1 = Pattern.compile(r1).matcher("..@163.com");
+        Matcher m1 = Pattern.compile(r1).matcher("..[]@163.com");
         System.out.println(m1.matches());
     }
 
