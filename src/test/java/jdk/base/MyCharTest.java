@@ -1,8 +1,11 @@
 package jdk.base;
 
+import com.google.common.base.Splitter;
+
 import org.junit.Test;
 
 import java.nio.charset.Charset;
+import java.util.StringTokenizer;
 
 /**
  * @author cctv 2018/2/3
@@ -65,5 +68,21 @@ public class MyCharTest {
         System.out.println(new String(b1, Charset.forName("gbk")));
         System.out.println(new String(b2, Charset.forName("iso8859-1")));
         System.out.println(new String(b3, Charset.forName("unicode")));
+    }
+
+    @Test
+    public void testStringToken() throws Exception {
+        StringTokenizer tokenizer = new StringTokenizer("Hello|World|End", "|");
+        while(tokenizer.hasMoreElements()){
+            System.out.println(tokenizer.nextElement());
+        }
+    }
+
+    @Test
+    public void testStringSplitter() throws Exception {
+        String str = "Hello|World|End";
+        String delimiter = "|";
+        Splitter splitter = Splitter.on(delimiter);
+        System.out.println(splitter.splitToList(str));
     }
 }
