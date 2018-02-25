@@ -18,6 +18,7 @@ public class StringPoolTest {
   /**
    * 修改maven compile source\target均为1.7
    * jdk17下string pool的表现
+   * 要选择编译器为eclipse
    * 要设置jdk为1.7
    * 要设置Build no check errors
    *
