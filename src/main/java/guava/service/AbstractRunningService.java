@@ -108,7 +108,6 @@ public abstract class AbstractRunningService implements Service {
    *
    * <p>By default this method does nothing.
    */
-  // TODO: consider supporting a TearDownTestCase-like API
   protected void shutDown() throws Exception {}
 
   /**

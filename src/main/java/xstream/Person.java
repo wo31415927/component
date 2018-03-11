@@ -67,7 +67,7 @@ public class Person {
         + firstname
         + ", lastname="
         + lastname
-        + ", type="
+        + ", bio="
         + type
         + ", phones="
         + phones

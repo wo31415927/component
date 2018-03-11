@@ -98,14 +98,17 @@ public class MyFileTest {
         // 1)未带/,则转化为当前class所在的package1/xx/xx.class
         // 2)带/,则去掉/
         //然后交给class对应的classLoader加载，AppClassLoader在classpath下寻址，classpath包含classes与test-classes
+        //classpath是java -cp xx:xx:*.jar xx命令中指定的第一个路径
         try (InputStream inputStream =
                      MyFile.class.getResourceAsStream("MyScannerTest.class")) {
             System.out.println("class1: "+inputStream);
         }catch (Exception e){}
+
         try (InputStream inputStream =
                      MyFile.class.getResourceAsStream("/zookeeper/curator/Executor.class")) {
             System.out.println("class2: "+inputStream);
         }catch (Exception e){}
+        //MyFile.class.getResource等同于ClassLoader().getResource()在classpath下查找
         //无法使用绝对路径
         //classloader在classpath下寻址，xx.xx.xx,这种java包寻址的方式不支持，必须是类似目录与文件的寻址方式
         try (InputStream inputStream =

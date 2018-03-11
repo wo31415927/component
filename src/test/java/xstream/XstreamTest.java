@@ -24,7 +24,7 @@ public class XstreamTest {
     // System.out.println(xstream.toXML(joe));
     // 标签名字和类属性名称需要对应
     String xml =
-        "<person type=\"All\"><firstname>Joe</firstname><lastname>Walnes</lastname><columns></columns></person>";
+        "<person bio=\"All\"><firstname>Joe</firstname><lastname>Walnes</lastname><columns></columns></person>";
     System.out.println(xml);
     // Person.List<PhoneNumber>有默认值，但是映射之后会被置为null,设置@XStreamOmitField也不管用
     Person jack = (Person) xstream.fromXML(xml);

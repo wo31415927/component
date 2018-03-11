@@ -53,7 +53,6 @@ public class MyCharTest {
         byte[] b0 = s.getBytes(Charset.forName("utf16"));
         //2字节
         byte[] b1 = s.getBytes(Charset.forName("gbk"));
-        //?
         byte[] b2 = s.getBytes(Charset.forName("iso8859-1"));
         //4字节，按网上说应该所有的unicode都是2字节来着
         byte[] b3 = s.getBytes(Charset.forName("unicode"));

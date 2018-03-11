@@ -32,7 +32,8 @@ public class MyRWTest {
   public MyRWTest() throws FileNotFoundException {}
   //      this.getClass().getResourceAsStream("/scanner.txt");
   /**
-   * 1. threadsafe,为什么需要？read过程中很多position需要lock保护 2. 能否动态修改delimiter？不行，readline()中\n是写死的
+   * 1. threadsafe,为什么需要？read过程中很多position需要lock保护
+   * 2. 能否动态修改delimiter？不行，readline()中\n是写死的
    *
    * @throws Exception
    */

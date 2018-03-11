@@ -80,4 +80,17 @@ public class HelloPatternTest {
     }
     System.out.println("Replace:" + s.replaceAll(regex, ""));
   }
+
+  /**
+   * 测试idea自定义TODO符号时的正则表达式
+   * @throws Exception
+   */
+  @Test
+  public void testDelToDo() throws Exception {
+    //需要写成\\b,指界定符，不会歧义成{0,1}或非贪婪模式
+    String regex = "\\b?\\b .*";
+    String s = "? Chapter 123";
+    Matcher matcher = Pattern.compile(regex).matcher(s);
+    System.out.println(matcher.find());
+  }
 }
