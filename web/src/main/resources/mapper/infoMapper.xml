@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netease.angel.newsfeed.apiserver.repository.InfoMapper">
+
+    <select id="getInfoModels" resultType="InfoModel" parameterType="java.lang.String">
+        SELECT info_id as infoId, item_type as infoType, title, summary, img_url as singleImg, imgs_url as tripleImg,
+        large_img_url as largeImg, source, info_url as sourceLink, insert_time AS insertTime, publish_time AS publishTime,
+        update_time AS updateTime, content, pic_url AS medias, video_url AS videos, tag, category, title_poi AS titlePoi
+        FROM info_item WHERE info_id IN
+        <foreach collection="list" item="infoIds" open="(" separator="," close=")">#{infoIds}</foreach>
+    </select>
+
+    <select id="getUserNewsModels" resultType="InfoModel">
+        SELECT info_id AS infoId, CASE item_type WHEN 1 THEN 'article' WHEN 2 THEN 'picset' WHEN 3 THEN 'video' ELSE
+        NULL END AS infoType, title, summary, show_type AS showType, img_url AS singleImg, imgs_url AS tripleImg,
+        large_img_url AS largeImg, source, create_time AS insertTime, create_time AS publishTime, update_time AS updateTime,
+        content, pic_urls AS medias, video_urls AS videos, tag, category
+        FROM user_info_item WHERE info_id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+</mapper>

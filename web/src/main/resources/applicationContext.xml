@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+
+
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
+       default-lazy-init="true">
+
+    <description>Spring公共配置</description>
+
+    <!-- 使用annotation自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.netease.angel">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <context:property-placeholder ignore-unresolvable="true"
+                                  location="classpath*:config.properties"/>
+
+    <!-- 启用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--<bean id="proxy"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        &lt;!&ndash; 为事务代理工厂Bean注入事务管理器 &ndash;&gt;
+        <property name="transactionManager" ref="transactionManager" />
+        &lt;!&ndash; 要在哪个Bean上面创建事务代理对象 &ndash;&gt;
+        <property name="target" ref="productDao" />
+        &lt;!&ndash; 指定事务属性 &ndash;&gt;
+        <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>-->
+
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>-->
+
+    <!--<aop:config>
+        <aop:pointcut id="pointcut"
+                      expression="XXXX" />
+        <aop:advisor advice-ref="txAdvice"
+                     pointcut-ref="pointcut" />
+    </aop:config>-->
+
+    <!-- Spring执行定时任务线程的个数 -->
+    <task:scheduler id="myScheduler" pool-size="3"/>
+
+    <!-- 对数据源进行事务管理 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 数据源配置, 使用Druid连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <!-- Connection Info -->
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="100"/>
+        <property name="minIdle" value="100"/>
+        <property name="maxActive" value="500"/>
+        <!-- 配置获取连接等待超时的时间，单位是毫秒 -->
+        <property name="maxWait" value="5000"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+    </bean>
+
+    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        &lt;!&ndash; 注入数据库连接池 &ndash;&gt;
+        <property name="dataSource" ref="dataSource" />
+        &lt;!&ndash; 扫描entity包,并使用别名,多个用;隔开&ndash;&gt;
+        <property name="typeAliasesPackage" value="com.netease.angel.newsfeed.apiserver.entity"/>
+        &lt;!&ndash; 扫描sql配置文件:mapper需要的xml文件&ndash;&gt;
+        <property name="mapperLocations" value="classpath*:mapper/*.xml" />
+        &lt;!&ndash; 配置mybatis全局配置文件 &ndash;&gt;
+        &lt;!&ndash; 		<property name="configuration">
+                    <bean class="org.apache.ibatis.session.Configuration">
+                        <property name="mapUnderscoreToCamelCase" value="true" />
+                    </bean>
+                </property> &ndash;&gt;
+    </bean>-->
+
+    <!-- spring与mybatis整合配置，扫描所有dao -->
+    <!--bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.netease.angel.newsfeed.apiserver.repository" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>-->
+
+
+</beans>

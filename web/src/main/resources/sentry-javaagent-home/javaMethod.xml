@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<javaMethod>
+
+    <pattern classNamePattern="com\.netease\.angel\.newsfeed\.apiserver\.service\..*" />
+    <pattern classNamePattern="com\.netease\.angel\.newsfeed\.apiserver\.repository\..*" />
+    <pattern classNamePattern="com\.netease\.angel\.newsfeed\.apiserver\.utils\..*" />
+
+    <!--<pattern classNamePattern="com\.netease\.sentry\.example\.service\.MyBusinessService" >-->
+        <!--<methodPattern  pattern="makeOrder" />-->
+    <!--</pattern>-->
+
+   
+</javaMethod>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<url>
+    
+    <exclude method="startwith" pattern="./css" />
+    <exclude method="endwith" pattern=".png" />
+    <exclude method="endwith" pattern=".js" />
+    <exclude method="regex" pattern=".*\.png" />
+    <exclude method="regex" pattern=".*\.css" />
+    
+    <include>
+    	<pattern method="startwith" source="/api" target="" action=""/>
+    	<!--<pattern method="endwith"   source=".htm" target="" action=""/>-->
+        <!--<pattern method="regex"     source="/abc/bcd/.*" target="/abc/bcd/all" action=""/>-->
+        <!--<pattern method="equal"   source="/abc/bcd/aaa.htm" target="" action="cmd"/>-->
+    	<!--<pattern method="all"   source="" target="" action=""/>-->
+    </include>
+ 
+</url>
