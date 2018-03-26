@@ -13,6 +13,9 @@
 
     <description>Spring公共配置</description>
 
+    <import resource="classpath:aop.xml"/>
+    <import resource="classpath:tx.xml"/>
+
     <!-- 使用annotation自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
     <context:component-scan base-package="com.netease.angel">
         <context:exclude-filter type="annotation"
@@ -24,47 +27,10 @@
     <context:property-placeholder ignore-unresolvable="true"
                                   location="classpath*:config.properties"/>
 
-    <!-- 启用annotation定义事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <!--<bean id="proxy"
-          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        &lt;!&ndash; 为事务代理工厂Bean注入事务管理器 &ndash;&gt;
-        <property name="transactionManager" ref="transactionManager" />
-        &lt;!&ndash; 要在哪个Bean上面创建事务代理对象 &ndash;&gt;
-        <property name="target" ref="productDao" />
-        &lt;!&ndash; 指定事务属性 &ndash;&gt;
-        <property name="transactionAttributes">
-            <props>
-                <prop key="*">PROPAGATION_REQUIRED</prop>
-            </props>
-        </property>
-    </bean>-->
-
-    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="add*" propagation="REQUIRED" />
-            <tx:method name="delete*" propagation="REQUIRED" />
-            <tx:method name="update*" propagation="REQUIRED" />
-            <tx:method name="add*" propagation="REQUIRED" />
-        </tx:attributes>
-    </tx:advice>-->
-
-    <!--<aop:config>
-        <aop:pointcut id="pointcut"
-                      expression="XXXX" />
-        <aop:advisor advice-ref="txAdvice"
-                     pointcut-ref="pointcut" />
-    </aop:config>-->
-
     <!-- Spring执行定时任务线程的个数 -->
     <task:scheduler id="myScheduler" pool-size="3"/>
 
-    <!-- 对数据源进行事务管理 -->
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+
 
     <!-- 数据源配置, 使用Druid连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">

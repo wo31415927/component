@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd"
+       default-lazy-init="true">
+
+    <description>Tx</description>
+
+    <!-- 启用annotation定义事务 -->
+    <!-- 属性显示灰色表示冗余默认属性值，可以不用显式设置 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false" mode="proxy"/>
+
+    <!--<bean id="proxy"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        &lt;!&ndash; 为事务代理工厂Bean注入事务管理器 &ndash;&gt;
+        <property name="transactionManager" ref="transactionManager" />
+        &lt;!&ndash; 要在哪个Bean上面创建事务代理对象 &ndash;&gt;
+        <property name="target" ref="productDao" />
+        &lt;!&ndash; 指定事务属性 &ndash;&gt;
+        <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>-->
+
+    <!-- 对数据源进行事务管理 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="nestedTransactionAllowed" value="true"/>
+    </bean>
+
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>-->
+
+    <!--<aop:config>
+        需要拦截的对象
+        <aop:pointcut id="pointcut"
+                      expression="XXXX" />
+        拦截之后对应的动作
+        <aop:advisor advice-ref="txAdvice"
+                     pointcut-ref="pointcut" />
+    </aop:config>-->
+
+
+</beans>

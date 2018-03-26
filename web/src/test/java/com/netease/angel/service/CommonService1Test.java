@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
   locations = {
-    "classpath*:/applicationContext.xml",
+    "classpath*:/context.xml"
 //    "file:src/main/webapp/WEB-INF/springMVC-servlet.xml"
   }
 )

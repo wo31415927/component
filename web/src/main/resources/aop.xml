@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-lazy-init="true">
+
+    <description>Aop</description>
+
+    <!-- 启动@aspectj的自动代理支持-->
+    <aop:aspectj-autoproxy/>
+    <!-- 配置AOP 切面 -->
+    <!--<aop:config proxy-target-class="false">
+        &lt;!&ndash; 定义其他切点函数 &ndash;&gt;
+        <aop:pointcut id="pointcut" expression="execution(* com.netease.angel.dao.UserDao.deleteUser(..))" />
+
+        &lt;!&ndash; 定义通知 order 定义优先级,值越小优先级越大&ndash;&gt;
+        <aop:aspect ref="myAspectXML" order="0">
+            &lt;!&ndash; 定义通知
+            method 指定通知方法名,必须与MyAspectXML中的相同
+            pointcut 指定切点函数
+            aop:before指定aop行为，相当于@Before注解
+            &ndash;&gt;
+            <aop:before method="before" pointcut-ref="pointcut" />
+
+            &lt;!&ndash; 后置通知  returning="returnVal" 定义返回值 必须与类中声明的名称一样, afterReturn才能拿到入参 &ndash;&gt;
+            <aop:after-returning method="afterReturn" pointcut-ref="pointcut"  returning="returnVal" />
+
+            &lt;!&ndash; 环绕通知 &ndash;&gt;
+            <aop:around method="around" pointcut-ref="pointcut"  />
+
+            &lt;!&ndash;异常通知 throwing="throwable" 指定异常通知错误信息变量,必须与类中声明的名称一样&ndash;&gt;
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="throwable"/>
+
+            &lt;!&ndash;
+                 method : 通知的方法(最终通知)
+                 pointcut-ref : 通知应用到的切点方法
+                &ndash;&gt;
+            <aop:after method="after" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>-->
+
+
+</beans>
