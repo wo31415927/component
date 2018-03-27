@@ -10,9 +10,8 @@ import javax.annotation.Resource;
 /** @author chenxiang 2018/3/24 */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-  locations = {
-    "classpath*:/context.xml"
-//    "file:src/main/webapp/WEB-INF/springMVC-servlet.xml"
+  locations = {"classpath*:/context.xml"
+    //    "file:src/main/webapp/WEB-INF/springMVC-servlet.xml"
   }
 )
 public class CommonService1Test {

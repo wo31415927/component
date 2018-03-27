@@ -6,4 +6,5 @@ package com.netease.angel.service;
  */
 public interface ICommonService {
     void insert();
+    void delete();
 }
