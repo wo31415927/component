@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 /** @author chenxiang 2018/3/27 */
 //@RestController
 @Controller
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class TestController2 {
-  @RequestMapping(value = "/index", method = RequestMethod.GET)
+  @RequestMapping(value = "/index2", method = RequestMethod.GET)
   public String getAppInfo(HttpServletRequest request) {
     System.out.println(request.getRequestURI());
     return "index";

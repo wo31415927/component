@@ -27,6 +27,7 @@
         <slf4j.version>1.7.12</slf4j.version>
         <jmockit.version>1.37</jmockit.version>
         <zookeeper.curator.version>4.0.0</zookeeper.curator.version>
+        <maven-compiler.version>3.1</maven-compiler.version>
     </properties>
 
     <dependencyManagement>
@@ -209,6 +210,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler.version}</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
