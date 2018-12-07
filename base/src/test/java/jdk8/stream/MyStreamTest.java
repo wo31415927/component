@@ -5,9 +5,11 @@ import com.google.common.truth.Truth;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.LinkedHashMap;
@@ -16,10 +18,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -30,6 +35,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collector.Characteristics.CONCURRENT;
+import static java.util.stream.Collector.Characteristics.IDENTITY_FINISH;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -88,7 +95,6 @@ public class MyStreamTest {
     // a and b or c = (a && b) || c,是按从左到右的顺序进行处理，是不是感觉和sql中的where条件比较像？
     Predicate<MyStream.Apple> redAndHeavyAppleOrGreen =
         redApple.and(a -> a.getWeight() > 150).or(a -> "green".equals(a.getColor()));
-
     Function<Integer, Integer> f = x -> x + 1;
     Function<Integer, Integer> g = x -> x * 2;
     // g(f(x)),如unix中的命令流
@@ -173,9 +179,8 @@ public class MyStreamTest {
 
   @Test
   public void testComparator() {
-    Comparator<Dish> dishCaloriesComparator = comparingInt(Dish::getCalories).reversed();
     System.out.println(menu);
-    Collections.sort(menu, dishCaloriesComparator);
+    menu.sort(comparingInt(Dish::getCalories).reversed());
     System.out.println(menu);
   }
 
@@ -259,6 +264,13 @@ public class MyStreamTest {
         menu.stream().collect(partitioningBy(Dish::isVegetarian));
   }
 
+  @Test
+  public void testDefCollector() {
+    menu.stream().collect(new ToListCollector<>());
+    // 简易写法
+    menu.stream().collect(ArrayList::new, List::add, List::addAll);
+  }
+
   /** 获取勾股数 */
   @Test
   public void testPythagoreanTriple() {
@@ -307,4 +319,113 @@ public class MyStreamTest {
     FAT,
     DIET
   }
+
+  public class ToListCollector<T> implements Collector<T, List<T>, List<T>> {
+    @Override
+    public Supplier<List<T>> supplier() {
+      return ArrayList::new;
+    }
+
+    @Override
+    public BiConsumer<List<T>, T> accumulator() {
+      return List::add;
+    }
+
+    /** 标记为IDENTITY_FINISH时会忽略finisher逻辑 */
+    @Override
+    public Function<List<T>, List<T>> finisher() {
+      return Function.identity();
+    }
+
+    /** 并行归约时，合并A,A->A */
+    @Override
+    public BinaryOperator<List<T>> combiner() {
+      return (list1, list2) -> {
+        list1.addAll(list2);
+        return list1;
+      };
+    }
+
+    @Override
+    public Set<Characteristics> characteristics() {
+      return Collections.unmodifiableSet(EnumSet.of(IDENTITY_FINISH, CONCURRENT));
+    }
+  }
+
+  public static boolean isPrime(List<Integer> primes, int candidate) {
+    if (1 == candidate) {
+      return false;
+    }
+    int candidateRoot = (int) Math.sqrt((double) candidate);
+    // 会遍历全部质数集合，略差
+    return primes.stream().noneMatch(p -> p <= candidateRoot && candidate % p == 0);
+  }
+
+  public class ToPrimeListCollector implements Collector<Integer, List<Integer>, List<Integer>> {
+    @Override
+    public Supplier<List<Integer>> supplier() {
+      return ArrayList::new;
+    }
+
+    @Override
+    public BiConsumer<List<Integer>, Integer> accumulator() {
+      return (ts, t) -> {
+        // 累加器中能够取到过程数据（已判断是质数的部分集合）
+        if (isPrime(ts, t)) {
+          ts.add(t);
+        }
+      };
+    }
+
+    /** 标记为IDENTITY_FINISH时会忽略finisher逻辑 */
+    @Override
+    public Function<List<Integer>, List<Integer>> finisher() {
+      return Function.identity();
+    }
+
+    /** 并行归约时，合并A,A->A */
+    @Override
+    public BinaryOperator<List<Integer>> combiner() {
+      // 需要依赖中间结果，不能并行
+      throw new UnsupportedOperationException();
+      /*return (list1, list2) -> {
+        list1.addAll(list2);
+        return list1;
+      };*/
+    }
+
+    @Override
+    public Set<Characteristics> characteristics() {
+      return Collections.unmodifiableSet(EnumSet.of(IDENTITY_FINISH));
+    }
+  }
+
+  @Test
+  public void testPrime() {
+    // 不能并行
+    System.out.println(IntStream.rangeClosed(1, 1000).boxed().collect(new ToPrimeListCollector()));
+  }
+
+  @Test
+  public void testParallelStream() {
+    // 对顺序流调用parallel方法并不意味着流本身有任何实际的变化。它在内部实际上就是设了一个boolean标志
+    // 以最后一个设置的标志生效
+    menu.stream().parallel().sequential();
+    // 设置并行流使用的线程数，默认是Runtime.getRuntime().availableProcessors()，该设置为全局设置，无法针对某一个并行流设置并行度
+    // N_threads = N_cpu * U_cpu * (1 + W / C),W/C为 单个行为等待的比例，如IO等待的时间越长，那么W/C越大，可以开更多的线程
+    // System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism","12");
+    // 并行化过程本身需要对流做递归划分，把每个子流的归纳操作分配到不同的线程，然后把这些操作的结果合并成一个值。但在多个内核之间
+    // 移动数据的代价也可能比你想的要大，所以很重要的一点是要保证在内核中并行执行工作的时间比在内核之间传输数据的时间长。
+    // 可以把有序流转换为无序流
+    menu.stream().unordered().parallel();
+    // LinkedList\Stream.iterate()不适合拆分流，前者需要遍历，后者需要下一个结果生成依赖上一个结果
+  }
+
+  public static long parallelSum(long n) {
+    return Stream.iterate(1L, i -> i + 1).limit(n).parallel().reduce(0L, Long::sum);
+  }
+
+
+
+
 }
