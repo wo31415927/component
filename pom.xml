@@ -11,6 +11,7 @@
     <modules>
         <module>web</module>
         <module>base</module>
+        <module>ds</module>
     </modules>
 
     <properties>
