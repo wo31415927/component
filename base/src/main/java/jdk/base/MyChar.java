@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * @author cctv 2018/2/3
  */
-public class git MyChar {
+public class MyChar {
     static final Pattern reUnicode = Pattern.compile("\\\\u([0-9a-zA-Z]{4})");
 
     /**
