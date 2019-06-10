@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import jdk.stream.MyStream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,7 +51,7 @@ import static java.util.stream.Collectors.summarizingInt;
 import static java.util.stream.Collectors.summingInt;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
-import static jdk8.stream.MyStream.filterIntegers;
+import static jdk.stream.MyStream.filterIntegers;
 
 /**
  * @author Administrator 2018/11/25/025

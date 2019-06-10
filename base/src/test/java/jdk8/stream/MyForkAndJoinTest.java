@@ -4,6 +4,8 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.stream.LongStream;
 
+import jdk.concurrent.MyForkAndJoin;
+
 /** @author chenxiang 2018/12/7 */
 public class MyForkAndJoinTest {
   /**

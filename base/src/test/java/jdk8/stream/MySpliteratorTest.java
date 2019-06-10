@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import jdk.base.MySpliterator;
+
 /** @author chenxiang 2018/12/7 */
 public class MySpliteratorTest {
   @Test

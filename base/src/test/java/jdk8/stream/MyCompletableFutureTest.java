@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException;
 import lombok.extern.slf4j.Slf4j;
 
 import static java.util.stream.Collectors.toList;
-import static jdk7.concurrent.MyExecutorTest.EXECUTOR_SERVICE;
+import static jdk.concurrent.MyExecutorTest.EXECUTOR_SERVICE;
 
 /** @author chenxiang 2018/12/11 */
 @Slf4j
