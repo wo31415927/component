@@ -9,9 +9,9 @@
     </Appenders>
 
     <Loggers>
-        <asyncRoot level="info" includeLocation="true">
+        <root level="info" includeLocation="true">
             <AppenderRef ref="Console"/>
-        </asyncRoot>
+        </root>
         <!-- 避免这种报错 严重: input future failed 出现在用户交互界面-->
         <!--<Logger name="com.google.common" level="ERROR" additivity="false"
                 includeLocation="true">

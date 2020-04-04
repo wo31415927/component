@@ -11,7 +11,7 @@
     <modules>
         <module>web</module>
         <module>base</module>
-        <module>ds</module>
+        <module>sqlparser</module>
     </modules>
 
     <properties>
@@ -21,7 +21,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-dbutils.version>1.7</commons-dbutils.version>
         <commons-cli.version>1.4</commons-cli.version>
-        <guava.version>23.0</guava.version>
+        <guava.version>27.0-jre</guava.version>
         <gson.version>2.8.5</gson.version>
         <truth.version>0.42</truth.version>
         <hadoop.version>3.1.1</hadoop.version>
@@ -31,10 +31,12 @@
         <lombok.version>1.18.4</lombok.version>
         <log4j2.version>2.11.1</log4j2.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <mysql.version>5.1.46</mysql.version>
         <junit.version>4.12</junit.version>
         <jmockit.version>1.37</jmockit.version>
         <assertj.version>3.11.1</assertj.version>
-        <zookeeper.curator.version>4.0.1</zookeeper.curator.version>
+        <curator.version>4.2.0</curator.version>
+        <jackson.version>2.9.9</jackson.version>
         <maven-compiler.version>3.1</maven-compiler.version>
     </properties>
 
@@ -47,12 +49,24 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
-            <version>${zookeeper.curator.version}</version>
+            <version>${curator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-test</artifactId>
-            <version>${zookeeper.curator.version}</version>
+            <version>${curator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
@@ -67,6 +81,10 @@
                 <exclusion>
                     <groupId>log4j</groupId>
                     <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.curator</groupId>
+                    <artifactId>curator-client</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -111,18 +129,6 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jmockit</groupId>
-            <artifactId>jmockit</artifactId>
-            <version>${jmockit.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -184,6 +190,11 @@
             <version>${jmockit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
 
         <!-- 日志 -->
@@ -218,6 +229,41 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>3.3.1</version>
+        </dependency>-->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.25.0-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.0.12.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

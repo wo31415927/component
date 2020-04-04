@@ -209,12 +209,6 @@
             <version>5.4.1.Final</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- 哨兵 -->
         <dependency>
             <groupId>com.netease.sentry</groupId>

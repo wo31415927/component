@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 /** @author chenxiang 2018/12/7 */
 public class MySpliterator {
-  static class WordCounter {
+  public static class WordCounter {
     private final int counter;
     private final boolean lastSpace;
 
@@ -31,7 +31,7 @@ public class MySpliterator {
     }
   }
 
-  static class WordCounterSpliterator implements Spliterator<Character> {
+  public static class WordCounterSpliterator implements Spliterator<Character> {
     private final String string;
     private int currentChar = 0;
 

@@ -3,6 +3,8 @@ package curator;
 import org.junit.Before;
 import org.junit.Test;
 
+import zookeeper.Executor;
+
 /**
  * @author zeyu 2018/2/1
  */
