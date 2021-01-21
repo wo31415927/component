@@ -36,7 +36,7 @@
         <jmockit.version>1.37</jmockit.version>
         <assertj.version>3.11.1</assertj.version>
         <curator.version>4.2.0</curator.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.9.10.7</jackson.version>
         <maven-compiler.version>3.1</maven-compiler.version>
     </properties>
 
