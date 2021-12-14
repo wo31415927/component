@@ -29,7 +29,7 @@
         <rxjava2.version>2.2.4</rxjava2.version>
         <xstream.version>1.4.11.1</xstream.version>
         <lombok.version>1.18.4</lombok.version>
-        <log4j2.version>2.11.1</log4j2.version>
+        <log4j2.version>2.16.0</log4j2.version>
         <slf4j.version>1.7.25</slf4j.version>
         <mysql.version>5.1.46</mysql.version>
         <junit.version>4.12</junit.version>
